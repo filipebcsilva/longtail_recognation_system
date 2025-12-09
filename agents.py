@@ -24,6 +24,7 @@ text_model = Ollama(
 vision_model = Ollama(
     id="llava:7b",
     options={"temperature": 0.0},
+    format='json'
 )
 
 code_model = Gemini(
@@ -32,7 +33,8 @@ code_model = Gemini(
     api_key = os.getenv("GEMINI_API_KEY")
 )
 
-questions = ["What is the digit on the image"]
+questions = ["Number of people","Number of cars","Is it daytime or nighttime","Is there any traffic light","What is the weather conditions","Number of signs","Number of childrens"]
+#Number of cars
 
 saver = Agent(
     tools=[MemoryTools()],
@@ -64,7 +66,7 @@ leitor = Agent(
         
         "DATA STANDARDS (Apply based on context):",
         "   - QUANTITIES: If the answer is a number, return a PURE INTEGER or FLOAT (e.g., 5, 3.5). Never add units like '5 kg' or '3 people'.",
-        "   - BOOLEANS: If the answer is Yes/No, use lowercase 'yes' or 'no'.",
+        "   - BOOLEANS: Return the STRING \"yes\" or \"no\" (lowercase and quoted).",
         "   - TEXT: Keep it concise and lowercase (e.g., 'blue', 'metal').",
         
     ],
