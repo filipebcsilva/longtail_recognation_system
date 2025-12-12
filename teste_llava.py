@@ -5,7 +5,7 @@ import pandas as pd
 import time
 
 PASTA_IMAGENS = "./bdd100"
-ARQUIVO_SAIDA = "resultado_bdd100.csv"
+ARQUIVO_SAIDA = "new_resultado_bdd100.csv"
 MODELO = "llava:7b"
 INTERVALO_CHECKPOINT = 50 
 
@@ -32,16 +32,16 @@ def perguntar_ao_llava(caminho_imagem, pergunta):
     """
     
     try:
-        response = ollama.chat(
+        response = ollama.generate(
             model=MODELO,
-            messages=[{
-                'role': 'user',
-                'content': prompt,
-                'images': [caminho_imagem]
-            }],
-            options={"temperature": 0.0}
+            prompt=prompt,
+            images=[caminho_imagem],
+            options={
+                "temperature": 0.0, 
+                "num_ctx": 4096,
+            },
         )
-        return response['message']['content'].strip()
+        return response['response'].strip()
     except Exception as e:
         print(f"Erro na api: {e}")
         return "error"
@@ -62,6 +62,10 @@ def salvar_batch_rapido(lista_novos_dados):
     escrever_cabecalho = not arquivo_existe
     
     df_novo_batch.to_csv(ARQUIVO_SAIDA, mode='a', header=escrever_cabecalho, index=False)
+    with open("last_image.txt", 'w') as f:
+        f.write(lista_novos_dados[-1]['Image_Name']  + "\n")
+        index = len(lista_novos_dados) - 1
+        f.write(str(index))
 
 def main():
     imagens = []

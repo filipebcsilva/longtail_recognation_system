@@ -1,0 +1,101 @@
+Image_Name,Number of people,Number of cars,Number of buses or trucks,Is there any red traffic light,Is there any green traffic light,Is there any traffic signs,Number of rider in motorcyles or bikes,What is the weather (clear/overcast/rainy/snowy/foggy/partly cloud/undefined),Time of the day (daytime/night/dawn),Type of scene (city stree/residential/highway/parking lot/tunnel/gas station)
+01c5cd64-192464e1.jpg,0,5,0,No,No,No,0,Partly cloudy,Daytime,City street
+06238b9d-364b8d6a.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+08d439aa-43ab5cc0.jpg,0,0,0,No,No,No,0,Rainy,Night,City street
+09a1bb0d-8acc7b23.jpg,0,3,0,No,No,No,0,Partly cloudy,Daytime,City street
+09ac7416-5a77d689.jpg,0,1,0,No,No,No,0,Clear,Night,Parking lot
+0a6966b1-ee9ded94.jpg,0,0,0,No,No,No,0,Partly cloudy,Dawn,City street
+0cb98c04-13604dd3.jpg,0,0,1,No,No,No,0,rainy,Night,City street
+0cbcfce7-bc97fd91.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+0cdd0b65-7f73759a.jpg,0,4,1,No,No,No,0,Partly cloudy,Night,City street
+0e48b61d-831f1846.jpg,0,1,1,No,No,No,0,Partly cloudy,Daytime,City street
+10a05690-af4e45e0.jpg,0,0,0,No,No,No,0,Overcast,Dawn,Residential
+1282cc8a-c395d7f1.jpg,0,5,0,No,No,No,0,Clear,Night,City street
+133a6a64-537f4c9a.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+14b50a39-1b5d5b59.jpg,0,1,0,No,No,No,0,Partly cloudy,Night,City street
+15f559a7-4211d746.jpg,0,4,1,No,No,No,0,Rainy,Night,City street
+1624683c-59695631.jpg,0,0,0,No,No,Yes,0,Partly cloudy,Dawn,City street
+1685d3d8-713b2e3d.jpg,0,1,0,No,No,No,0,Rainy,Night,Tunnel
+1a9edd0e-cd77b966.jpg,0,0,0,No,No,No,0,Foggy,Night,City street
+1accee17-e3ef2a44.jpg,0,4,0,No,No,No,0,Partly cloudy,Night,City street
+1bd2a81a-16d27acb.jpg,0,0,0,No,No,No,0,Partly cloudy,Daytime,City street
+1c1f26a3-92dbad98.jpg,0,5,0,No,No,No,0,Partly cloudy,Night,City street
+1e376185-0fda0b16.jpg,0,0,0,No,No,No,0,Foggy,Night,Highway
+1e797842-3c47cec5.jpg,0,0,0,No,No,No,0,Partly cloudy,Dawn,City street
+23b3a002-0cf504c2.jpg,0,4,0,No,No,No,0,Partly cloudy,Dawn,City street
+25baae21-c242bb75.jpg,0,1,0,No,No,No,0,Partly cloudy,Night,City street
+296a8bda-97cd6082.jpg,0,0,1,No,No,Yes,0,Partly cloudy,Night,City street
+2a9af7d8-6373df6d.jpg,0,4,0,No,No,No,0,Foggy,Night,City street
+2b1ee38e-04432368.jpg,0,0,0,No,No,No,0,Partly cloudy,Dawn,Highway
+2ce0b449-97417a00.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,Residential
+2dd5a370-30ab27d1.jpg,0,0,0,No,No,No,0,Snowy,Night,City street
+2f5cdc98-3e06b29c.jpg,0,0,0,No,No,No,0,Partly cloudy,Daytime,City street
+316fc6f3-d91c58d8.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+33ac7be1-656dfb40.jpg,0,3,0,No,No,No,0,Partly cloudy,Night,City street
+33c2f246-d240b10d.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+34a50e9e-b9803539.jpg,0,4,0,No,No,No,0,Foggy,Daytime,Tunnel
+36206d75-b0cbc248.jpg,0,4,0,No,No,No,0,Overcast,Night,City street
+36862c9d-e3b3f343.jpg,0,0,0,No,No,Yes,0,Foggy,Night,Highway
+37363715-991ac532.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+38ebbd50-e1deb318.jpg,0,0,0,No,No,No,0,Foggy,Night,City street
+3be7ea59-0c16cdf0.jpg,0,0,0,No,No,Yes,0,Overcast,Night,City street
+42c1fbc0-0d445c50.jpg,0,4,0,No,No,No,0,Rainy,Night,City street
+439b2e81-72143d9b.jpg,0,1,1,No,No,No,0,Partly cloudy,Daytime,Tunnel
+468e751b-1ae34214.jpg,0,5,0,No,No,No,0,Foggy,Night,City street
+46b110b6-f4bb1591.jpg,0,0,0,No,No,No,0,Overcast,Night,City street
+476d0402-848e10d5.jpg,0,0,0,No,No,No,0,Rainy,Night,City street
+4c641856-5f5db7a5.jpg,0,0,0,No,No,Yes,0,Rainy,Night,City street
+4cfb0c9b-572603b8.jpg,0,0,0,No,No,No,0,Clear,Night,City street
+51614b4d-cf941485.jpg,0,0,0,No,No,No,0,Partly cloudy,Daytime,City street
+5262b509-768fd8e8.jpg,0,1,0,No,No,No,0,Foggy,Night,City street
+5465ec8c-3e52faf7.jpg,0,0,0,No,No,No,0,Clear,Night,City street
+01c5cd64-192464e1.jpg,0,5,0,No,No,No,0,Partly cloudy,Daytime,City street
+06238b9d-364b8d6a.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+08d439aa-43ab5cc0.jpg,0,0,0,No,No,No,0,Rainy,Night,City street
+09a1bb0d-8acc7b23.jpg,0,3,0,No,No,No,0,Partly cloudy,Daytime,City street
+09ac7416-5a77d689.jpg,0,1,0,No,No,No,0,Clear,Night,Parking lot
+0a6966b1-ee9ded94.jpg,0,0,0,No,No,No,0,Partly cloudy,Dawn,City street
+0cb98c04-13604dd3.jpg,0,0,1,No,No,No,0,rainy,Night,City street
+0cbcfce7-bc97fd91.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+0cdd0b65-7f73759a.jpg,0,4,1,No,No,No,0,Partly cloudy,Night,City street
+0e48b61d-831f1846.jpg,0,1,1,No,No,No,0,Partly cloudy,Daytime,City street
+10a05690-af4e45e0.jpg,0,0,0,No,No,No,0,Overcast,Dawn,Residential
+1282cc8a-c395d7f1.jpg,0,5,0,No,No,No,0,Clear,Night,City street
+133a6a64-537f4c9a.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+14b50a39-1b5d5b59.jpg,0,1,0,No,No,No,0,Partly cloudy,Night,City street
+15f559a7-4211d746.jpg,0,4,1,No,No,No,0,Rainy,Night,City street
+1624683c-59695631.jpg,0,0,0,No,No,Yes,0,Partly cloudy,Dawn,City street
+1685d3d8-713b2e3d.jpg,0,1,0,No,No,No,0,Rainy,Night,Tunnel
+1a9edd0e-cd77b966.jpg,0,0,0,No,No,No,0,Foggy,Night,City street
+1accee17-e3ef2a44.jpg,0,4,0,No,No,No,0,Partly cloudy,Night,City street
+1bd2a81a-16d27acb.jpg,0,0,0,No,No,No,0,Partly cloudy,Daytime,City street
+1c1f26a3-92dbad98.jpg,0,5,0,No,No,No,0,Partly cloudy,Night,City street
+1e376185-0fda0b16.jpg,0,0,0,No,No,No,0,Foggy,Night,Highway
+1e797842-3c47cec5.jpg,0,0,0,No,No,No,0,Partly cloudy,Dawn,City street
+23b3a002-0cf504c2.jpg,0,4,0,No,No,No,0,Partly cloudy,Dawn,City street
+25baae21-c242bb75.jpg,0,1,0,No,No,No,0,Partly cloudy,Night,City street
+296a8bda-97cd6082.jpg,0,0,1,No,No,Yes,0,Partly cloudy,Night,City street
+2a9af7d8-6373df6d.jpg,0,4,0,No,No,No,0,Foggy,Night,City street
+2b1ee38e-04432368.jpg,0,0,0,No,No,No,0,Partly cloudy,Dawn,Highway
+2ce0b449-97417a00.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,Residential
+2dd5a370-30ab27d1.jpg,0,0,0,No,No,No,0,Snowy,Night,City street
+2f5cdc98-3e06b29c.jpg,0,0,0,No,No,No,0,Partly cloudy,Daytime,City street
+316fc6f3-d91c58d8.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+33ac7be1-656dfb40.jpg,0,3,0,No,No,No,0,Partly cloudy,Night,City street
+33c2f246-d240b10d.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+34a50e9e-b9803539.jpg,0,4,0,No,No,No,0,Foggy,Daytime,Tunnel
+36206d75-b0cbc248.jpg,0,4,0,No,No,No,0,Overcast,Night,City street
+36862c9d-e3b3f343.jpg,0,0,0,No,No,Yes,0,Foggy,Night,Highway
+37363715-991ac532.jpg,0,0,0,No,No,No,0,Partly cloudy,Night,City street
+38ebbd50-e1deb318.jpg,0,0,0,No,No,No,0,Foggy,Night,City street
+3be7ea59-0c16cdf0.jpg,0,0,0,No,No,Yes,0,Overcast,Night,City street
+42c1fbc0-0d445c50.jpg,0,4,0,No,No,No,0,Rainy,Night,City street
+439b2e81-72143d9b.jpg,0,1,1,No,No,No,0,Partly cloudy,Daytime,Tunnel
+468e751b-1ae34214.jpg,0,5,0,No,No,No,0,Foggy,Night,City street
+46b110b6-f4bb1591.jpg,0,0,0,No,No,No,0,Overcast,Night,City street
+476d0402-848e10d5.jpg,0,0,0,No,No,No,0,Rainy,Night,City street
+4c641856-5f5db7a5.jpg,0,0,0,No,No,Yes,0,Rainy,Night,City street
+4cfb0c9b-572603b8.jpg,0,0,0,No,No,No,0,Clear,Night,City street
+51614b4d-cf941485.jpg,0,0,0,No,No,No,0,Partly cloudy,Daytime,City street
+5262b509-768fd8e8.jpg,0,1,0,No,No,No,0,Foggy,Night,City street
+5465ec8c-3e52faf7.jpg,0,0,0,No,No,No,0,Clear,Night,City street
