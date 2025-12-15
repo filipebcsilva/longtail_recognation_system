@@ -60,8 +60,8 @@ def copiar_imagens_aleatorias(pasta_origem, pasta_destino, quantidade=100):
 # Substitua os caminhos abaixo pelos caminhos reais do seu computador.
 # Dica: Use o 'r' antes das aspas para evitar erros com barras no Windows.
 
-destino = "/home/filipe/longtail_recognation_system/bdd50"
-origem = "/home/filipe/longtail_recognation_system/bdd100k-dataset/bdd100k/bdd100k/images/100k/train"
+destino = "/home/filipe/longtail_recognation_system/bdd10k"
+origem = "/home/filipe/longtail_recognation_system/bdd100k-dataset/bdd100k/bdd100k/images/100k/train/trainA"
 
 # Executa a função
-copiar_imagens_aleatorias(origem, destino, quantidade=50)
+copiar_imagens_aleatorias(origem, destino, quantidade=100)

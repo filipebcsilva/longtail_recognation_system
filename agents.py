@@ -1,11 +1,11 @@
 from agno.agent import Agent
 from pydantic import BaseModel,Field
+from typing import List
 from MemoryTool import MemoryTools
 from agno.models.ollama import Ollama
 from agno.models.google import Gemini
 from agno.tools.python import PythonTools
 import os
-
 
 class LeitorOutuput(BaseModel):
     answers: dict = Field(...,

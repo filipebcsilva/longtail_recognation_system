@@ -4,18 +4,18 @@ import glob
 import pandas as pd
 import time
 
-PASTA_IMAGENS = "./bdd100"
-ARQUIVO_SAIDA = "new_resultado_bdd100.csv"
-MODELO = "llava:7b"
+PASTA_IMAGENS = "./bdd10k"
+ARQUIVO_SAIDA = "new_data_bdd10k.csv"
+MODELO = "llava:13b"
 INTERVALO_CHECKPOINT = 50 
 
 PERGUNTAS = [
-    "Number of people", "Number of cars", "Number of buses or trucks", 
+    "Number of people", "Number of cars", "Number of buses", "Number of trucks",
     "Is there any red traffic light", "Is there any green traffic light", 
-    "Is there any traffic signs","Number of rider in motorcyles or bikes",
+    "Is there any yellow traffic light","Number of bikes","Number of motorcycles",
+    "Is there any traffic signs","Number of rider in motorcyles or bikes","Number of trains(those that move over railroads)",
     "What is the weather (clear/overcast/rainy/snowy/foggy/partly cloud/undefined)",
-    "Time of the day (daytime/night/dawn)",
-    "Type of scene (city stree/residential/highway/parking lot/tunnel/gas station)"
+    "Time of the day (daytime/night/dawn)","What is the scene (city streets/highway/residential/parking lot/gas station/tunnel/undefined)",
 ]
 
 def perguntar_ao_llava(caminho_imagem, pergunta):
