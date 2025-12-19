@@ -5,6 +5,8 @@ __pycache__/
 
 bdd100k-dataset/
 bdd10k/
+bdd7k/
+bdd_3k/
 
 # C extensions
 *.so

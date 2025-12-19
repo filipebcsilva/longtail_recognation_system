@@ -1,6 +1,7 @@
 import json
 from agno.workflow import Step, Workflow, StepOutput,StepInput,Loop
-from agents import leitor,saver,analista
+from agents import leitor,saver,analista,gerador_de_perguntas,filtrador
+from agno.workflow.condition import Condition
 import base64
 from agno.media import Image
 import time
@@ -10,6 +11,33 @@ from  iterator import ImageIterator
 import os
 
 iterator = ImageIterator("bdd100")
+
+def needs_vision_model(step_input: StepInput):
+    
+    data = step_input.previous_step_content
+    
+    final_data = []
+    
+    if isinstance(data, str):
+        clean_text = re.sub(r'```json\s*|\s*```', '', data).strip()
+        
+        try:
+            final_data = eval(clean_text)
+        except (ValueError, SyntaxError):
+            try:
+                final_data = json.loads(clean_text)
+            except json.JSONDecodeError:
+                try:
+                    final_data = eval(clean_text + "}")
+                except:
+                    print(f"Não foi possível ler os dados {clean_text}")
+    elif isinstance(data, list):
+        final_data = data
+    
+    if len(final_data) > 0:
+        return True
+    else:
+        return False
 
 def fetch_next_image(step_input: StepInput) -> StepOutput:
     iterator = step_input.additional_data.get("iterator")
@@ -130,16 +158,20 @@ save_image_step = Step(
     executor = save_next_image
 )
 
-vilma_workflow = Workflow(
-    name="Pandas pipeline",
-    steps= [
-        Loop(
+image_loop = Loop(
             name = "Image loop",
             steps = [get_next_image_step,leitor_step,name_image_step,save_image_step],
             max_iterations = iterator.get_size()
-        ),
-        # get_user_questions_step,
-        # analista_step
+        )
+
+
+
+vilma_workflow = Workflow(
+    name="Pandas pipeline",
+    steps= [
+        image_loop,
+        get_user_questions_step,
+        analista_step
     ],
     debug_mode = True,
 )
@@ -150,8 +182,9 @@ input = [
 
 inicio = time.perf_counter()
 
+
 vilma_workflow.run(
-    input = "Execute o workflow",
+    input = input,
     additional_data = {
         "iterator":iterator,
         "image_name":"",

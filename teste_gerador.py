@@ -5,7 +5,7 @@ from agno.models.ollama import Ollama
 import os
 
 text_model = Ollama(
-    id="llama3.1:8b",
+    id="llama3.1:8b-instruct-q8_0",
     options={
             "temperature":0.0
         }
@@ -14,11 +14,17 @@ text_model = Ollama(
 class GeradorOutput(BaseModel):
     new_questions: List[str] = Field(
         ..., 
-        description="List of questions to ask the vision agent. Return empty list [] if the column already exists in the dataset."
+        description="List of information to be extracted from images."
     )
-    
 
-questions = ["Number of people","Number of cars","Is it daytime or nighttime","Is there any traffic light","What is the weather conditions","Number of signs"]
+class FilterOutput(BaseModel):
+    new_questions: List[str] = Field(
+        ..., 
+        description="List of questions to ask the vision agent.Return an empty list if all are already covered."
+    )
+
+
+questions = ["Number of cars", "Number of pedestrians", "Time of Day", "Traffic light status"]
 
 gerador_de_perguntas = Agent(
     model = text_model, 
@@ -52,6 +58,11 @@ gerador_de_perguntas = Agent(
     "   - Return ONLY a Python list of strings containing the necessary questions.",
     "   - Example: ['Number of cars', 'Is there a traffic light']",
     
+    "5. REDUNDANCY FILTER:",
+    "   - Do NOT ask both 'Is there [object]?' and 'Number of [object]?'.",
+    "   - PREFER 'Number of [object]' as it implies existence.",
+    "   - EXCEPTION: Use 'Is there' for abstract concepts (e.g., 'Is there a traffic jam?').",
+    
     
     "--- FEW-SHOT EXAMPLES ---",
     
@@ -75,6 +86,39 @@ gerador_de_perguntas = Agent(
     debug_mode=True,
 )
 
-input = ["Is a child running across the street while it is snowing?"]
+
+filter = Agent(
+    model = text_model, 
+    name="Question filter",
+    description="You are a Semantic Data Filter & Deduplication Specialist.",
+
+    instructions = [
+        "You have a 'KNOWLEDGE BASE' (columns we have) and the user's input (requested data).",
+        "Your job: Return a list of items from the INPUT that do NOT exist in the KNOWLEDGE BASE.",
+
+        "--- KNOWLEDGE BASE ---",
+        f"{questions}",
+        "----------------------",
+
+        "### STRICT RULES ###",
+        "1. EXACT MATCH: If the item is already in the Knowledge Base, REMOVE it.",
+        "2. DIFFERENT OBJECTS = NEW DATA: 'Trucks' are different from 'Cars'. 'Motorcycles' are different from 'Bicycles'. If the object type is different, KEEP IT.",
+        "3. SPECIFICITY: If the input asks for a specific attribute NOT in the KB (e.g., 'Red Cars' vs 'Cars'), KEEP IT.",
+
+        "### OUTPUT ###",
+        "Return ONLY the Python list of keeping items. If everything is removed, return [].",
+        "Output:"
+    ],
+    output_schema=FilterOutput, 
+    debug_mode=True,
+)
+
+# questions = ["Number of cars", "Number of pedestrians", "Is it daytime", "Traffic light status"]
+# input = "Is there a car parked on the sidewalk?"
+input = "images with more than three trucks in a rainy or snowy environment during nighttime"
     
-gerador_de_perguntas.print_response(input=input)
+response_gerador = gerador_de_perguntas.run(input=input)
+
+response = filter.run(input=response_gerador.content)
+
+print(response.content)
