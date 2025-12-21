@@ -6,10 +6,10 @@ import ollama
 
 # --- CONFIGURAÇÕES ---
 PASTA_IMAGENS = "./bdd7k"
-ARQUIVO_SAIDA = "bdd7k_llava_34b_q8_qual.csv"
+ARQUIVO_SAIDA = "bdd7k_llava_34b_q8_qual_blur.csv"
 MODELO = "llava:34b-v1.6-q8_0" 
 INTERVALO_CHECKPOINT = 50 
-CHECKPOINT = False 
+CHECKPOINT = True 
 
 # PERGUNTAS = [
 #     "How many people are there?", 
@@ -29,22 +29,7 @@ CHECKPOINT = False
 #     "What is the scene among the following options 'city streets' / 'highway / 'residential' /  'parking lot' / 'gas station' / 'tunnel' or 'undefined'?",
 # ]
 PERGUNTAS = [
-    "Is there any artificial lights?",
-    "Is there any shadow?",
-    "Is there any twilight (Morning or evening)?",
-    "Are there any animal on the road?",
-    "Is there any cone or other objects on the road?",
-    "Is there any work on the road?",
-    "Is there any scholar bus?",
-    "Is there any children on the road?",
-    "What is the weather among the following options 'mostly clear' / 'rainy' / 'snowy' / 'foggy' / 'cloudy' or 'undefined'? ",
-    "What is the time of the day among the following options 'daytime'/ 'night' or 'dusk/dawn' or 'undefined'?",
-    "Are there any people in unusual positions (fallen on the ground)?",
-    "Are there any cyclists making dangerous moves?",
-    "Are there any pedestrians making dangerous moves?",
-    "Are there any vehicle crossing a red or yellow light?",
-    "Are there any poor lighting conditions (e.g., glare, shadows) affecting visibility?",
-    "Are there any vehicles (mainly trucks or buses) obstructing visibility?"
+    "Is there any blur on the image?",
 ]
 def limpar_resposta(texto):
     if not texto:

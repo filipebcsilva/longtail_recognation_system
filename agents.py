@@ -3,8 +3,9 @@ from pydantic import BaseModel,Field
 from typing import List
 from MemoryTool import MemoryTools
 from agno.models.ollama import Ollama
-from agno.models.google import Gemini
+from database_collums import get_data_collums
 from agno.tools.python import PythonTools
+import pandas as pd
 import os
 
 class LeitorOutuput(BaseModel):
@@ -13,39 +14,39 @@ class LeitorOutuput(BaseModel):
                         )
 
 class GeradorOutput(BaseModel):
-    new_questions: List[str] = Field(
+    questions: List[str] = Field(
         ..., 
         description="List of information to be extracted from images."
     )
 
 class FilterOutput(BaseModel):
-    final_list: List[str] = Field(
-        ..., 
+    output: List[str] = Field(
+        ...,
+        default_factory=list,
         description="List of questions to ask the vision agent.Return an empty list if all are already covered."
     )
 
 
 text_model = Ollama(
-    id="llama3.1:8b-instruct-q8_0",
+    id="llama3.1:70b-instruct-q6_K",
     options={
             "temperature":0.0
-        }
+        },
+    format="json"
     )
 
 vision_model = Ollama(
-    id="llava:7b",
+    id="llava:34b-v1.6-q8_0",
     options={"temperature": 0.0},
     format='json'
 )
 
-code_model = Gemini(
-    id = "gemini-2.5-flash",
-    provider= "gemini",
-    api_key = os.getenv("GEMINI_API_KEY")
+code_model = Ollama(
+    id = "qwen2.5-coder:32b-instruct-q8_0",
 )
 
-questions = ["Number of people","Number of cars","Is it daytime or nighttime","Is there any traffic light","What is the weather conditions","Number of signs","Number of childrens"]
-#Number of cars
+
+questions = get_data_collums("data.csv")
 
 saver = Agent(
     tools=[MemoryTools()],
@@ -67,13 +68,12 @@ saver = Agent(
 leitor = Agent(
     model = vision_model,
     name = "Word reader",
-    description= "You are an AI agent specialized in analyzing words",
+    description= "You are an AI agent specialized in analyzing images",
     instructions=[
-        "TASK: Answer the questions below regarding the input word/image.",
-        f"QUESTIONS:\n{questions}",
+        "TASK: Answer the question on the input regarding the input image.",
         
         "OUTPUT FORMAT (CRITICAL):",
-        "1. The output must be a dictionary and the keys must be the exact questions listed above.",
+        "1. The output must be a dictionary and the keys must be the exact question",
         
         "DATA STANDARDS (Apply based on context):",
         "   - QUANTITIES: If the answer is a number, return a PURE INTEGER or FLOAT (e.g., 5, 3.5). Never add units like '5 kg' or '3 people'.",
@@ -92,8 +92,6 @@ analista = Agent(
     description="You are a Pandas Expert specialized in writing robust, defensive code for data analysis.",
     
    instructions=[
-      f"CONTEXT: The column names in the dataset are {questions}",
-        
         "GOAL: Answer user questions by writing and running Python scripts using the PythonTools avaiable.",
 
         "RULES: "
@@ -188,7 +186,7 @@ gerador_de_perguntas = Agent(
     "Output: ['Are the car headlights on', 'What is the time of the day']",
     "-------------------------"
     ],
-    output_schema=GeradorOutput, 
+    output_schema=GeradorOutput,
     debug_mode=True,
 )
 
@@ -199,22 +197,29 @@ filtrador = Agent(
     description="You are a Semantic Data Filter & Deduplication Specialist.",
 
     instructions = [
-        "You have a 'KNOWLEDGE BASE' (columns we have) and the user's input (requested data).",
-        "Your job: Return a list of items from the INPUT that do NOT exist in the KNOWLEDGE BASE.",
+    "### SYSTEM ROLE ###",
+    "You are a STRICT DATA FILTER ENGINE. You are NOT a chat assistant.",
+    "Your Goal: Perform a mathematical Set Difference: (USER_INPUT - KNOWLEDGE_BASE).",
 
-        "--- KNOWLEDGE BASE ---",
-        f"{questions}",
-        "----------------------",
+    "### KNOWLEDGE BASE (Columns we already have) ###",
+    f"{questions}", 
+    "--------------------------------------------------",
 
-        "### STRICT RULES ###",
-        "1. EXACT MATCH: If the item is already in the Knowledge Base, REMOVE it.",
-        "2. DIFFERENT OBJECTS = NEW DATA: 'Trucks' are different from 'Cars'. 'Motorcycles' are different from 'Bicycles'. If the object type is different, KEEP IT.",
-        "3. SPECIFICITY: If the input asks for a specific attribute NOT in the KB (e.g., 'Red Cars' vs 'Cars'), KEEP IT.",
+    "### THE INPUT DATA ###",
+    "The user will send you a list of strings (the CANDIDATE LIST) in the next message.",
+    "You must process THAT list against the Knowledge Base above.",
+    "If the Knowledge Base is empty, just return the same string as output"
 
-        "### OUTPUT ###",
-        "Return ONLY the Python list of keeping items. If everything is removed, return [].",
-        "Output:"
+    "### STRICT EXECUTION RULES ###",
+    "1. COPY-PASTE ONLY: If a candidate from the user's list is NOT in the Knowledge Base, return it EXACTLY as written.",
+    "2. EXACT MATCH FILTER: If a candidate IS in the Knowledge Base, discard it.",
+    "3. EMPTY KB RULE: If the Knowledge Base above is empty [], return the user's list exactly as is.",
+    "4. NO HALLUCINATIONS: Do not change words. Do not fix typos. Do not add adjectives. If input is 'Trucks', output 'Trucks'.",
+
+    "### OUTPUT FORMAT ###",
+    "Return ONLY a Python list of strings. Example: ['Item A', 'Item B'].",
+    "Do not write 'Here is the list'. Just the list."
     ],
-    output_schema=FilterOutput, 
+    output_schema=FilterOutput,
     debug_mode=True,
 )

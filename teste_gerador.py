@@ -5,10 +5,11 @@ from agno.models.ollama import Ollama
 import os
 
 text_model = Ollama(
-    id="llama3.1:8b-instruct-q8_0",
+    id="llama3.1:70b-instruct-q6_K",
     options={
-            "temperature":0.0
-        }
+            "temperature":0.0,
+        },
+    format= "json",
     )
 
 class GeradorOutput(BaseModel):
@@ -82,7 +83,6 @@ gerador_de_perguntas = Agent(
     "Output: ['Are the car headlights on', 'What is the time of the day']",
     "-------------------------"
     ],
-    output_schema=GeradorOutput, 
     debug_mode=True,
 )
 
@@ -109,13 +109,12 @@ filter = Agent(
         "Return ONLY the Python list of keeping items. If everything is removed, return [].",
         "Output:"
     ],
-    output_schema=FilterOutput, 
     debug_mode=True,
 )
 
 # questions = ["Number of cars", "Number of pedestrians", "Is it daytime", "Traffic light status"]
 # input = "Is there a car parked on the sidewalk?"
-input = "images with more than three trucks in a rainy or snowy environment during nighttime"
+input = "images with more than 3 people"
     
 response_gerador = gerador_de_perguntas.run(input=input)
 
