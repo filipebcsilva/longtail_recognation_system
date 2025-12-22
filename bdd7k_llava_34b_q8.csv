@@ -95,8 +95,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 0252f2b5-1f4c92f2.jpg,0,10,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,Residential
 0256f56a-35c8e2fe.jpg,0,10,1,0,No,No,No,0,0,Yes,0,0,Rainy,Night,Tunnel
 025f49ef-0f6366f3.jpg,0,3,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,Dusk/dawn,City streets
-02645e20-6935575e.jpg,0,10,0,1,No,No,No,0,0,Yes,0,0,Foggy,"Dusk/dawn
-<|im|",Tunnel
+02645e20-6935575e.jpg,0,10,0,1,No,No,No,0,0,Yes,0,0,Foggy,Dusk/dawn,Tunnel
 0277379d-ed078767.jpg,0,10,0,1,No,No,No,0,0,No,0,0,Cloudy,Daytime,Residential
 0282c435-23183908.jpg,0,5,0,0,Yes,No,No,0,0,Yes,0,0,Cloudy,Daytime,City streets
 02844a1f-c957e1c3.jpg,0,3,0,1,No,No,No,0,0,No,0,0,Mostly clear,Daytime,City streets
@@ -905,8 +904,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 1749b27b-bcce0777.jpg,2,3,0,0,No,No,No,0,0,No,0,0,Cloudy,Dusk/dawn,City streets
 175ea080-fd5f7024.jpg,0,1,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,Residential
 176348dc-58c97143.jpg,0,4,0,1,No,No,No,0,0,No,0,0,Cloudy,Dusk/dawn,Highway
-177b957f-04a3b3a2.jpg,0,1,0,0,No,No,No,0,0,No,0,0,Rainy,"Dusk/dawn
-<|im|",City streets
+177b957f-04a3b3a2.jpg,0,1,0,0,No,No,No,0,0,No,0,0,Rainy,Dusk/dawn,City streets
 177b957f-df164100.jpg,0,3,1,0,No,No,No,0,0,No,0,0,Rainy,Daytime,City streets
 177b957f-fc7b8fac.jpg,0,4,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,Parking lot
 17808296-7e236586.jpg,0,3,0,1,No,No,No,0,0,No,0,0,Mostly clear,Daytime,Highway
@@ -949,8 +947,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 189ca5ba-ab7001df.jpg,0,3,0,0,No,No,No,0,0,Yes,0,0,Cloudy,Daytime,City streets
 189d3882-dc9c3d68.jpg,0,3,0,1,No,No,No,0,0,Yes,0,0,Cloudy,Daytime,Highway
 189d6de1-6cb6875e.jpg,1,1,0,0,Yes,No,No,1,1,Yes,1,0,Mostly clear,Daytime,City streets
-18a4dd1d-61170a82.jpg,0,0,0,0,No,No,No,0,0,No,0,0,Foggy,"Dusk/dawn
-<|im|",City streets
+18a4dd1d-61170a82.jpg,0,0,0,0,No,No,No,0,0,No,0,0,Foggy,Dusk/dawn,City streets
 18b2657a-8c43a4c3.jpg,0,3,0,0,Yes,Yes,No,0,0,Yes,0,0,Rainy,Daytime,City streets
 18b76084-ac45e158.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
 18ca8efa-4e0b8752.jpg,0,10,1,1,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
@@ -1482,8 +1479,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 25b25c5f-f4b017f8.jpg,0,10,0,0,No,No,No,0,0,Yes,0,0,Cloudy,Dusk/dawn,Highway
 25b6fde2-ad21a1c3.jpg,0,2,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,City streets
 25b6fde2-f8453bab.jpg,0,2,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,Residential
-25baae21-18f4f334.jpg,0,3,0,0,No,Yes,No,0,0,Yes,0,0,Cloudy,"Dusk/dawn
-<|im|",City streets
+25baae21-18f4f334.jpg,0,3,0,0,No,Yes,No,0,0,Yes,0,0,Cloudy,Dusk/dawn,City streets
 25baae21-46eda81c.jpg,0,1,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,Highway
 25bcd385-39f9d45b.jpg,0,3,0,0,No,No,No,0,0,Yes,0,0,Mostly clear,Daytime,Highway
 25c00e6f-ddaa8492.jpg,0,2,0,1,No,No,No,0,1,Yes,0,0,Cloudy,Dusk/dawn,City streets
@@ -1733,8 +1729,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 2b8f6fda-9f6a3dcb.jpg,0,10,0,0,No,No,No,0,0,Yes,0,0,Cloudy,Daytime,Highway
 2b901de6-4708b6ea.jpg,1,3,1,0,No,No,Yes,0,0,No,0,0,Mostly clear,Daytime,City streets
 2b904850-dae798c1.jpg,0,10,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
-2b923350-c22307af.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Snowy,"Dusk/dawn
-<|im|",Parking lot
+2b923350-c22307af.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Snowy,Dusk/dawn,Parking lot
 2b92915d-4e0f18b9.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Mostly clear,Daytime,City streets
 2b9e683c-90a19964.jpg,0,5,0,1,No,No,Yes,0,0,Yes,0,0,Mostly clear,Daytime,City streets
 2ba7d514-01a636ab.jpg,0,3,0,1,No,No,Yes,0,0,No,0,0,Rainy,Daytime,City streets
@@ -2317,8 +2312,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 3ad71ba9-3e7eb47a.jpg,0,3,0,1,No,No,No,0,0,Yes,0,0,Cloudy,Daytime,City streets
 3ade1ab9-6c018fab.jpg,0,3,0,0,No,No,No,0,0,Yes,0,0,Cloudy,Daytime,Highway
 3adef612-a72c5d83.jpg,0,1,0,1,No,No,No,0,0,No,0,0,Cloudy,Daytime,Tunnel
-3aed4a89-1c1c5c7a.jpg,0,3,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,"Dusk/dawn
-<|im|",City streets
+3aed4a89-1c1c5c7a.jpg,0,3,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,Dusk/dawn,City streets
 3b0461c6-00750a2e.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
 3b0a7a3d-b0f52555.jpg,1,3,1,0,No,No,No,0,0,Yes,0,0,Cloudy,Daytime,City streets
 3b146563-8d667c4b.jpg,0,3,0,0,No,No,No,0,0,Yes,0,0,Snowy,Daytime,City streets
@@ -2977,8 +2971,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 4d70ad1a-2ab4ab95.jpg,1,1,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
 4d733ba1-6ad4b922.jpg,0,0,0,0,No,No,No,0,0,Yes,0,0,Mostly clear,Daytime,City streets
 4d7621dc-5a7ffb9b.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
-4d79f06c-4a169b1a.jpg,0,0,0,0,No,Yes,No,0,0,Yes,0,0,Cloudy,"Dusk/dawn
-<|im|",City streets
+4d79f06c-4a169b1a.jpg,0,0,0,0,No,Yes,No,0,0,Yes,0,0,Cloudy,Dusk/dawn,City streets
 4daa286f-80b97570.jpg,0,10,0,0,No,No,No,0,0,No,0,0,Rainy,Daytime,Residential
 4daa286f-e9772c43.jpg,0,3,0,0,No,No,No,0,0,Yes,0,0,Mostly clear,Daytime,Highway
 4db26ff7-f8a3490b.jpg,0,1,0,0,No,No,No,0,0,Yes,0,0,Rainy,Daytime,Residential
@@ -4476,8 +4469,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 72e2c746-0df729c0.jpg,0,3,0,2,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
 72eccbd6-402a218d.jpg,0,3,1,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,City streets
 72f8bb98-b2268b73.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,Gas station
-72feb2f3-51f0798c.jpg,1,1,0,0,Yes,No,No,0,0,Yes,0,0,Cloudy,"Dusk/dawn
-<|im|",City streets
+72feb2f3-51f0798c.jpg,1,1,0,0,Yes,No,No,0,0,Yes,0,0,Cloudy,Dusk/dawn,City streets
 7300f8fb-84ecf547.jpg,0,4,0,0,No,No,No,0,0,Yes,0,0,Rainy,Daytime,City streets
 730585a8-d57b052f.jpg,1,3,0,0,No,No,No,0,0,No,0,0,Cloudy,Daytime,Residential
 730c887b-0f4a1766.jpg,10,3,0,0,No,No,No,0,0,Yes,0,0,Mostly clear,Daytime,City streets
@@ -5444,8 +5436,7 @@ Image_Name,How many people are there?,How many cars are there?,How many buses ar
 8addd213-0f68b2a6.jpg,0,3,0,0,No,No,No,0,0,No,0,0,Foggy,Dusk/dawn,Highway
 8adfd61f-1ab308e1.jpg,1,3,0,1,No,No,No,1,0,No,1,0,Mostly clear,Daytime,Residential
 8ae98dba-def17f93.jpg,0,1,0,0,No,No,No,0,0,Yes,0,0,Mostly clear,Daytime,Highway
-8aed8e2f-e572279a.jpg,0,1,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,"Dusk/dawn
-<|im|im_end|>",City streets
+8aed8e2f-e572279a.jpg,0,1,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,Dusk/dawn,City streets
 8aefe373-5870a370.jpg,0,3,0,0,No,No,No,0,0,Yes,0,0,Mostly clear,Daytime,Highway
 8af0541f-0f4deefe.jpg,0,2,0,0,No,No,Yes,0,0,Yes,0,0,Cloudy,Daytime,City streets
 8af07d3d-0ddad610.jpg,0,1,0,0,No,No,No,0,0,Yes,0,0,Rainy,Daytime,City streets
@@ -8281,8 +8272,7 @@ fe10df8f-e5963216.jpg,0,1,1,1,No,No,No,0,0,No,0,0,Foggy,Night,City streets
 48cbc95f-fb55a7ac.jpg,0,1,0,1,No,No,No,0,0,Yes,0,0,Rainy,Night,City streets
 48d4f48c-783ced8b.jpg,0,10,0,0,Yes,No,No,0,10,Yes,10,0,Rainy,Night,City streets
 492e2ee9-b7176d8b.jpg,0,4,0,0,No,No,No,0,0,No,0,0,Foggy,Night,City streets
-4934cab2-7edfde96.jpg,1,1,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,"Dusk/dawn
-<|im|",City streets
+4934cab2-7edfde96.jpg,1,1,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,Dusk/dawn,City streets
 493aff77-cba1e989.jpg,0,3,0,0,Yes,No,No,0,0,Yes,0,0,Rainy,Night,City streets
 49687470-29483711.jpg,0,3,0,0,No,Yes,No,0,0,Yes,0,0,Rainy,Night,City streets
 496ee26b-2e7f5662.jpg,0,3,0,1,Yes,No,No,0,0,No,0,0,Rainy,Night,City streets

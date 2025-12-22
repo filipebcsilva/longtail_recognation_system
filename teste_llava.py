@@ -1,25 +1,30 @@
+import sys
 import os
 import time
 import glob
 import pandas as pd
 import ollama
+from ollama import Client
+from tqdm import tqdm
 
 # --- CONFIGURAÇÕES ---
 PASTA_IMAGENS = "./bdd7k"
-ARQUIVO_SAIDA = "bdd7k_llava_34b_q8_qual_blur.csv"
-MODELO = "llava:34b-v1.6-q8_0" 
-INTERVALO_CHECKPOINT = 50 
-CHECKPOINT = True 
+ARQUIVO_SAIDA = "bdd7k_llava_34b_q8_qual_blur2.csv"
+MODELO = "llava:34b-v1.6-q8_0"
+INTERVALO_CHECKPOINT = 50
+CHECKPOINT = True
+
+client_gpu2 = Client(host='http://127.0.0.1:11435')
 
 # PERGUNTAS = [
-#     "How many people are there?", 
-#     "How many cars are there?", 
-#     "How many buses are there?", 
+#     "How many people are there?",
+#     "How many cars are there?",
+#     "How many buses are there?",
 #     "How many trucks are there?",
-#     "Is there any RED traffic light?", 
-#     "Is there any GREEN traffic light?", 
+#     "Is there any RED traffic light?",
+#     "Is there any GREEN traffic light?",
 #     "Is there any YELLOW traffic light?",
-#     "How many bikes are there?", 
+#     "How many bikes are there?",
 #     "How many motorcycles are there?",
 #     "Are there any traffic signs?",
 #     "How many riders in motorcyles or bikes are there?",
@@ -29,26 +34,34 @@ CHECKPOINT = True
 #     "What is the scene among the following options 'city streets' / 'highway / 'residential' /  'parking lot' / 'gas station' / 'tunnel' or 'undefined'?",
 # ]
 PERGUNTAS = [
-    "Is there any blur on the image?",
+    "Is the image mostly blurred?",
+    "Are there large shadows in the image?",
+    "Are there significant glass reflections in the image?",
+    "Are there significant sun glares in the image?",
+    "Is there large amounts of snow in the image?",
+    "Is the image full of rain droplets?",
+    "Are there vehicles crossing in front of the car?",
+    "Are there people crossing in front of the car?",
 ]
+
 def limpar_resposta(texto):
     if not texto:
         return "undefined"
-    
+
     texto_limpo = texto.replace('"', '').replace("'", "").replace(".", "").replace(",", "")
-    texto_limpo = texto_limpo.strip() 
-    
+    texto_limpo = texto_limpo.strip()
+
     if texto_limpo.lower() == 'yes':
         return 'Yes'
     if texto_limpo.lower() == 'no':
         return 'No'
-        
+
     return texto_limpo
 
 def perguntar_ao_llava(caminho_imagem, pergunta):
     prompt = f"""
     Look at the image and answer the question: "{pergunta}"
-    
+
     CRITICAL RULES:
     1. Output ONLY the answer. Do NOT use full sentences.
     2. Do NOT use punctuation (no periods, no commas, no quotes).
@@ -56,25 +69,26 @@ def perguntar_ao_llava(caminho_imagem, pergunta):
     4. If boolean, output ONLY 'Yes' or 'No'.
     5. If categorical, output ONLY the category name.
     """
-    print(f"Perguntando: {pergunta}")
+    #print(f"Perguntando: {pergunta}")
     try:
-        response = ollama.generate(
+        response = client_gpu2.generate(
             model=MODELO,
             prompt=prompt,
             images=[caminho_imagem],
             options={
-                "temperature": 0.0, 
+                "temperature": 0.0,
                 "num_ctx": 4096,
             },
         )
-        
+
         texto_cru = response['response']
-        print(f"Respondi essa pergunta {pergunta}")
+        #print(f"Respondi essa pergunta {pergunta}")
         return limpar_resposta(texto_cru)
-        
+
     except Exception as e:
         print(f"Erro na api: {e}")
-        return "error"
+        #return "error"
+        sys.exit(-1)
 
 def salvar_batch_rapido(lista_novos_dados):
     if not lista_novos_dados:
@@ -85,28 +99,29 @@ def salvar_batch_rapido(lista_novos_dados):
     df_novo_batch = pd.DataFrame(lista_novos_dados)
 
     cols_ordenadas = ['Image_Name'] + PERGUNTAS
-    
+
     for col in cols_ordenadas:
         if col not in df_novo_batch.columns:
             df_novo_batch[col] = "undefined"
 
     df_novo_batch = df_novo_batch.reindex(columns=cols_ordenadas)
-    
+
     arquivo_existe = os.path.exists(ARQUIVO_SAIDA) and os.path.getsize(ARQUIVO_SAIDA) > 0
     escrever_cabecalho = not arquivo_existe
-    
+
     df_novo_batch.to_csv(ARQUIVO_SAIDA, mode='a', header=escrever_cabecalho, index=False)
-    
+
     with open("last_image.txt", 'w') as f:
         f.write(lista_novos_dados[-1]['Image_Name'])
 
 def main():
-    imagens = []
+    imagens = [] # os.listdir(PASTA_IMAGENS)
     for ext in ["*.jpg", "*.jpeg", "*.png"]:
         imagens.extend(glob.glob(os.path.join(PASTA_IMAGENS, ext)))
-    
-    imagens = sorted(list(set(imagens)))
+
+    imagens = list(sorted(list(set(imagens))))
     total_imgs = len(imagens)
+
     if CHECKPOINT:
         last_image = 0
         for i ,img in enumerate(imagens):
@@ -117,28 +132,29 @@ def main():
                 last_image = i
                 break
         imagens = imagens[last_image + 1 :]
+
     total_imgs = len(imagens)
     print(f"Iniciando processamento de {total_imgs} imagens.")
 
     inicio = time.perf_counter()
-    
+
     buffer_dados = []
-    
-    for i, img_path in enumerate(imagens):
+
+    for img_path in tqdm(imagens):
         nome_arquivo = os.path.basename(img_path)
-        print(f"[{i+1}/{total_imgs}] Processando: {nome_arquivo}")
-        
+        #print(f"[{i+1}/{total_imgs}] Processando: {nome_arquivo}")
+
         dados_da_imagem = {'Image_Name': nome_arquivo}
-        
+
         for pergunta in PERGUNTAS:
             resposta = perguntar_ao_llava(img_path, pergunta)
             dados_da_imagem[pergunta] = resposta
-            
+
         buffer_dados.append(dados_da_imagem)
-        
+
         if len(buffer_dados) >= INTERVALO_CHECKPOINT:
             salvar_batch_rapido(buffer_dados)
-            buffer_dados = [] 
+            buffer_dados = []
 
     if buffer_dados:
         salvar_batch_rapido(buffer_dados)

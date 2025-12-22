@@ -7,7 +7,8 @@ bdd100k-dataset/
 bdd10k/
 bdd7k/
 bdd_3k/
-
+analise-resultados/qualitative_imgs/
+analise-resultados/bdd100k_labels_images_train.json
 # C extensions
 *.so
 

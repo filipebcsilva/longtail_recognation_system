@@ -2,37 +2,13 @@ from agno.workflow import Workflow,Loop
 from agents import gerador_de_perguntas,filtrador,analista
 from workflow import get_next_image_step,leitor_step,name_image_step,save_image_step
 from iterator import ImageIterator
-import ast
-import json
-import re
-def extrair_lista_blindada(conteudo):
+import pandas as pd
+from database_collums import get_data_collums,get_collum_unique_values_string
+from agents import extrair_codigo
+
+def longtail_system(query:str,dir_image:str):
     
-    if isinstance(conteudo, list):
-        return conteudo
-
-    dados = conteudo
-
-    if isinstance(conteudo, str):
-        texto_limpo = re.sub(r'```json\s*|\s*```', '', conteudo).strip()
-        
-        try:
-            dados = json.loads(texto_limpo)
-        except json.JSONDecodeError:
-            try:
-                dados = ast.literal_eval(texto_limpo)
-            except:
-                print(f"Não foi possível ler o texto: {texto_limpo}")
-                return []
-
-    if isinstance(dados, dict):
-        for valor in dados.values():
-            if isinstance(valor, list):
-                return valor
-                
-    return [] 
-
-def longatail_system(query:str,dir_image:str):
-    
+    db_collums = get_data_collums("data.csv")
     image_iterator = ImageIterator(dir_image)
     
     image_loop = Loop(
@@ -51,20 +27,46 @@ def longatail_system(query:str,dir_image:str):
     
     response_gerador = gerador_de_perguntas.run(query)
 
-    response_filtrador = filtrador.run(response_gerador.content.questions)
+    candidatos = response_gerador.content.questions  
+    kb_atual = db_collums           
+
+    filtrador_input = f"""
+    --- EXISTING_KNOWLEDGE ---
+    {kb_atual}
+
+    --- CANDIDATES ---
+    {candidatos}
+    """
+
+    response_filtrador = filtrador.run(filtrador_input)
     
     response_limpa = response_filtrador.content.output
-    for pergunta in response_limpa:
-        image_workflow.run(
-        input = pergunta,
-        additional_data = {
-        "image_iterator": image_iterator,
-        "image_name":"",
-        }
-        )
-        image_iterator = ImageIterator(dir_image)
     
-    analista.run(query)
+    if len(response_limpa) > 0:
+        for pergunta in response_limpa:
+            image_workflow.run(
+            input = pergunta,
+            additional_data = {
+                "image_iterator": image_iterator,
+                "image_name":"",
+                "question_name":pergunta,
+                
+            }
+            )
+            image_iterator.reset()
     
-
-longatail_system("images with more than three trucks in a rainy or snowy environment during nighttime","bdd1")
+    
+    collums_string = get_collum_unique_values_string("data.csv")
+    
+    analista_input = f"""
+        User Query: {query}
+        Data Columns: {collums_string}
+        Image Directory: {dir_image}
+    """
+    
+    response = analista.run(analista_input)
+    clean_response = extrair_codigo(response.content)
+    contexto = {}
+    exec(clean_response,globals(),contexto)
+    lista_final = contexto.get("final_result",[])
+    return lista_final

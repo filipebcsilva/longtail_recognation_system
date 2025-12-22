@@ -28,4 +28,6 @@ class ImageIterator:
             self.current_index += 1
             return image_path
         return None
+    def reset(self) -> None:
+        self.current_index = 0
            

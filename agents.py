@@ -1,12 +1,51 @@
 from agno.agent import Agent
-from pydantic import BaseModel,Field
+from pydantic import BaseModel,Field,model_validator
 from typing import List
+from database_collums import get_collum_unique_values_string
 from MemoryTool import MemoryTools
 from agno.models.ollama import Ollama
 from database_collums import get_data_collums
-from agno.tools.python import PythonTools
-import pandas as pd
-import os
+import re
+import json
+from typing import Any
+import ast
+
+def extrair_codigo(texto):
+
+    padrao = r"```(?:python)?\n(.*?)```"
+    match = re.search(padrao, texto, re.DOTALL)
+    
+    if match:
+        return match.group(1) 
+    else:
+        return texto
+
+def extrair_lista_blindada(conteudo):
+    
+    if isinstance(conteudo, list):
+        return conteudo
+
+    dados = conteudo
+
+    if isinstance(conteudo, str):
+        texto_limpo = re.sub(r'```json\s*|\s*```', '', conteudo).strip()
+        
+        try:
+            dados = json.loads(texto_limpo)
+        except json.JSONDecodeError:
+            try:
+                dados = ast.literal_eval(texto_limpo)
+            except:
+                print(f"Não foi possível ler o texto: {texto_limpo}")
+                return []
+
+    if isinstance(dados, dict):
+        for valor in dados.values():
+            if isinstance(valor, list):
+                return valor
+                
+    return [] 
+
 
 class LeitorOutuput(BaseModel):
     answers: dict = Field(...,
@@ -25,6 +64,12 @@ class FilterOutput(BaseModel):
         default_factory=list,
         description="List of questions to ask the vision agent.Return an empty list if all are already covered."
     )
+    @model_validator(mode='before')
+    @classmethod
+    def limpar_sujeira(cls, data: Any) -> Any:
+        lista_limpa = extrair_lista_blindada(data)
+        
+        return {"output": lista_limpa}
 
 
 text_model = Ollama(
@@ -74,6 +119,9 @@ leitor = Agent(
         
         "OUTPUT FORMAT (CRITICAL):",
         "1. The output must be a dictionary and the keys must be the exact question",
+        "2. The value must be the answer to the question.",
+        "3  Do not change the name of the question.",
+        "4  Only respond the exact question that was asked.",
         
         "DATA STANDARDS (Apply based on context):",
         "   - QUANTITIES: If the answer is a number, return a PURE INTEGER or FLOAT (e.g., 5, 3.5). Never add units like '5 kg' or '3 people'.",
@@ -92,41 +140,59 @@ analista = Agent(
     description="You are a Pandas Expert specialized in writing robust, defensive code for data analysis.",
     
    instructions=[
-        "GOAL: Answer user questions by writing and running Python scripts using the PythonTools avaiable.",
+    "### SYSTEM ROLE ###",
+    "GOAL: Answer user questions by writing and running Python scripts to EXTRACT image filenames.",
+    "IDENTITY: You are an Expert Python Data Analyst. You provide precise lists of matching data.",
 
-        "RULES: "
-        "1. Try to install the pandas package before writing the code",
-        "2. You MUST write the script, don't forget to do that",
-        "3. After installing the pandas package, folow the steps:"
-        
-        "STRATEGY FOR MIXED DATA TYPES (Critical):",
-        
-        "1. LOADING:",
-        "   - `df = pd.read_csv('data.csv', index_col=0)`",
-        
-        "2. ANALYZE THE QUESTION TO DECIDE THE DATA TYPE:",
-        
-        "   Type A: NUMERIC QUESTIONS (How many, Average, Sum, Max, > 5)",
-        "       - ACTION: You MUST convert the column to numeric first.",
-        "       - CODE: `df['col'] = pd.to_numeric(df['col'], errors='coerce')`",
-        "       - REASON: This handles dirty data (e.g., text mixed with numbers) by turning it into NaN.",
-        
-        "   Type B: CATEGORICAL QUESTIONS (Color, Type, Main object, Yes/No)",
-        "       - ACTION: Treat as string. Do NOT use to_numeric.",
-        "       - CODE: `df['col'] = df['col'].astype(str).str.lower().str.strip()`",
-        "       - OPS: Use `.value_counts()`, `.unique()` or string filtering (`==`).",
-        
-        "3. COMPLEX FILTERING (Combining types):",
-        "   - Example: 'Show images with > 2 people AND Blue color'.",
-        "   - Logic: Apply Type A logic to the 'people' column AND Type B logic to the 'color' column.",
-        "   - Code: `df[(df['people'] > 2) & (df['color'] == 'blue')]`.",
-        
-        "4. OUTPUT:",
-        "   - Always use `print()` to display the result.",
+    "### INPUT DATA ###",
+    "You will receive: USER_QUERY, the name of the COLUMNS and the VALUES that appear at each collum, and the IMAGE DIRECTORY.",
+    "If a collum is purely numeric, you will receive its min and max values.",
+    "If a collum is categorical, you will receive a list of all unique values it contains.",
 
+    "STRICT TECHNICAL INSTRUCTIONS FOR THE CODE:",
+    "1. The index column of the dataframe ALREADY CONTAINS the file extension (e.g., 'photo.jpg').",
+    "2. Don't change the collums names. Use them exactly as provided.",
+    "3. ALWAYS handle dirty data with robust cleaning techniques.",
+    "4. Your final output must be a Python LIST of strings printed to stdout.",
+
+    "### STEP 1: ROBUST DATA LOADING & CLEANING (CRITICAL) ###",
+    "0. IMPORT: Import pandas as pd (Do NOT import matplotlib).",
+    "1. LOAD: `df = pd.read_csv('data.csv', index_col=0)`.",
+    
+    "2. ANALYZE THE QUESTION TO DECIDE THE DATA TYPE STRATEGY:",
+    
+    "   Type A: NUMERIC QUESTIONS (How many, Average, Sum, Max, > 5)",
+    "       - ACTION: You MUST convert the column to numeric first.",
+    "       - CODE: `df['col'] = pd.to_numeric(df['col'], errors='coerce')`",
+    "       - REASON: This handles dirty data/strings by turning them into NaN.",
+    
+    "   Type B: CATEGORICAL QUESTIONS (Color, Type, Main object, Yes/No)",
+    "       - ACTION: Treat as string for comparison.",
+    "       - CODE: `df['col'] = df['col'].astype(str).str.lower().str.strip()`",
+    "       - LOGIC: Compare against lowercase values (e.g., `df['col'] == 'red'`).",
+
+    "   Type C: COMPLEX FILTERING",
+    "       - ACTION: Combine both numeric and categorical cleaning as needed.",
+    "       - Combine logic: `df[(df['people'] > 2) & (df['color'] == 'blue')]`.",
+    
+    "### STEP 2: FILTERING & EXTRACTION (MANDATORY) ###",
+    "1. Apply the filtering logic to create `filtered_df`.",
+    "2. EXTRACT the index of the `filtered_df` to a list.",
+    "   - CODE: `matching_images = filtered_df.index.tolist()`",
+    "3. Do NOT limit the number of results. Return ALL matching images.",
+    "4. If no images match, return an empty list `[]`.",
+
+    "### STEP 3: FINAL OUTPUT ###",
+    "1. ASSIGN the list `matching_images` to a variable named `final_result`.",
+    "   - CODE: `final_result = matching_images`",
+    "   - DO NOT print anything else.",
+    
+    "### IMPORTANT RULES ###",
+    "1. Return ONLY the executable Python code.",
+    "2. DO NOT include explanations, text comments, or markdown blocks (```python)."
     ],
     
-    tools=[PythonTools()], 
+    tools=[], 
     debug_mode=True,
 )
 
@@ -197,29 +263,39 @@ filtrador = Agent(
     description="You are a Semantic Data Filter & Deduplication Specialist.",
 
     instructions = [
-    "### SYSTEM ROLE ###",
-    "You are a STRICT DATA FILTER ENGINE. You are NOT a chat assistant.",
-    "Your Goal: Perform a mathematical Set Difference: (USER_INPUT - KNOWLEDGE_BASE).",
+    "You are a Set Difference Engine. You receive two lists: 'CANDIDATES' and 'EXISTING_KNOWLEDGE'.",
+    "Your job: Return a list of items from the CANDIDATES that do NOT exist in the EXISTING_KNOWLEDGE.",
 
-    "### KNOWLEDGE BASE (Columns we already have) ###",
-    f"{questions}", 
-    "--------------------------------------------------",
+    "### STRICT RULES ###",
+    "1. EXACT MATCH: If the item is already in the Knowledge Base, REMOVE it.",
+    "2. DIFFERENT OBJECTS = NEW DATA: 'Trucks' are different from 'Cars'. 'Motorcycles' are different from 'Bicycles'. If the object type is different, KEEP IT.",
+    "3. SPECIFICITY: If the input asks for a specific attribute NOT in the KB (e.g., 'Red Cars' vs 'Cars'), KEEP IT.",
+    "4. BROAD TERMS: If the input is broad (e.g., 'Vehicles') and the KB has specific types (e.g., 'Cars', 'Bikes'), KEEP IT.",
+    "5. SYNONYMS & PARAPHRASES: Treat synonymous phrases as identical. If the meaning matches an existing item, REMOVE IT.",
+    "6. CONTEXT AWARENESS: Consider the overall context. If the input implies a different aspect than what's in the KB, KEEP IT.",
+    "7. If the Existing Knowledge is empty, return all Candidates.",
+    "8. If all Candidates exist in the Knowledge Base, return an empty list.",
+    
 
-    "### THE INPUT DATA ###",
-    "The user will send you a list of strings (the CANDIDATE LIST) in the next message.",
-    "You must process THAT list against the Knowledge Base above.",
-    "If the Knowledge Base is empty, just return the same string as output"
+   " If 'EXISTING_KNOWLEDGE' is empty, null, or [], YOU MUST RETURN THE 'CANDIDATES' LIST EXACTLY AS IS.",
+   " Do not return an empty list if Candidates are provided.",
+   
+    "### OUTPUT ###",
+    " Return a JSON OBJECT with a single key called 'output'.",
+    "The value must be the list of kept items.",
 
-    "### STRICT EXECUTION RULES ###",
-    "1. COPY-PASTE ONLY: If a candidate from the user's list is NOT in the Knowledge Base, return it EXACTLY as written.",
-    "2. EXACT MATCH FILTER: If a candidate IS in the Knowledge Base, discard it.",
-    "3. EMPTY KB RULE: If the Knowledge Base above is empty [], return the user's list exactly as is.",
-    "4. NO HALLUCINATIONS: Do not change words. Do not fix typos. Do not add adjectives. If input is 'Trucks', output 'Trucks'.",
-
-    "### OUTPUT FORMAT ###",
-    "Return ONLY a Python list of strings. Example: ['Item A', 'Item B'].",
-    "Do not write 'Here is the list'. Just the list."
+    "Example:",
+    "{'output': ['Number of people', 'Is there a group']}"
     ],
     output_schema=FilterOutput,
     debug_mode=True,
 )
+
+
+schema_string = get_collum_unique_values_string("data.csv")
+analista_input = f"""
+    User Query: {"qualquer consulta"}
+    Data Columns: {schema_string}
+    Image Directory: {"bdd/.100k/images/"}
+"""
+print(analista_input)

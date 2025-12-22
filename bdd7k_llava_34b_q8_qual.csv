@@ -95,8 +95,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 0252f2b5-1f4c92f2.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,Yes,No
 0256f56a-35c8e2fe.jpg,Yes,Yes,No,No,No,Yes,No,No,Rainy,Night,No,No,No,No,Yes,No
 025f49ef-0f6366f3.jpg,Yes,Yes,Yes,No,No,No,No,No,Rainy,Dusk/dawn,No,No,No,No,Yes,No
-02645e20-6935575e.jpg,Yes,Yes,Yes,No,No,No,No,No,Foggy,"Dusk/dawn
-<|im|",No,No,No,No,Yes,No
+02645e20-6935575e.jpg,Yes,Yes,Yes,No,No,No,No,No,Foggy,Dusk/dawn,No,No,No,No,Yes,No
 0277379d-ed078767.jpg,No,Yes,No,No,Yes,No,No,No,Cloudy,Daytime,No,No,No,No,Yes,No
 0282c435-23183908.jpg,Yes,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
 02844a1f-c957e1c3.jpg,Yes,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
@@ -904,8 +903,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 1749b27b-bcce0777.jpg,Yes,Yes,Yes,No,Yes,No,No,No,Cloudy,Dusk/dawn,No,No,Yes,No,Yes,No
 175ea080-fd5f7024.jpg,Yes,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 176348dc-58c97143.jpg,No,No,Yes,No,No,Yes,No,No,Cloudy,Dusk/dawn,No,No,No,No,Yes,No
-177b957f-04a3b3a2.jpg,Yes,Yes,Yes,No,No,No,No,No,Rainy,"Dusk/dawn
-<|im|",No,No,No,No,Yes,No
+177b957f-04a3b3a2.jpg,Yes,Yes,Yes,No,No,No,No,No,Rainy,Dusk/dawnNo,No,No,No,Yes,No
 177b957f-df164100.jpg,Yes,Yes,No,No,No,Yes,Yes,No,Rainy,Daytime,No,No,No,No,Yes,Yes
 177b957f-fc7b8fac.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 17808296-7e236586.jpg,No,No,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
@@ -948,8 +946,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 189ca5ba-ab7001df.jpg,No,No,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
 189d3882-dc9c3d68.jpg,No,Yes,No,No,Yes,Yes,No,No,Cloudy,Daytime,No,No,No,No,No,No
 189d6de1-6cb6875e.jpg,No,Yes,Yes,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,Yes,No
-18a4dd1d-61170a82.jpg,No,Yes,Yes,No,No,Yes,No,No,Foggy,"Dusk/dawn
-<|im|",No,No,No,No,Yes,No
+18a4dd1d-61170a82.jpg,No,Yes,Yes,No,No,Yes,No,No,Foggy,Dusk/dawn,No,No,No,No,Yes,No
 18b2657a-8c43a4c3.jpg,Yes,No,No,No,No,No,No,No,Rainy,Daytime,No,No,No,No,Yes,No
 18b76084-ac45e158.jpg,Yes,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
 18ca8efa-4e0b8752.jpg,No,Yes,Yes,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
@@ -1481,8 +1478,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 25b25c5f-f4b017f8.jpg,Yes,No,Yes,No,Yes,No,No,No,Cloudy,Dusk/dawn,No,No,No,Yes,Yes,No
 25b6fde2-ad21a1c3.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 25b6fde2-f8453bab.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
-25baae21-18f4f334.jpg,Yes,No,Yes,No,Yes,Yes,No,No,Cloudy,"Dusk/dawn
-<|im|",No,No,No,No,No,No
+25baae21-18f4f334.jpg,Yes,No,Yes,No,Yes,Yes,No,No,Cloudy,Dusk/dawn,No,No,No,No,No,No
 25baae21-46eda81c.jpg,No,Yes,No,No,No,Yes,No,No,Mostly clear,Daytime,No,No,No,No,Yes,No
 25bcd385-39f9d45b.jpg,No,No,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 25c00e6f-ddaa8492.jpg,No,Yes,Yes,No,No,Yes,No,No,Cloudy,Dusk/dawn,No,No,No,No,Yes,No
@@ -1732,8 +1728,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 2b8f6fda-9f6a3dcb.jpg,No,No,No,No,Yes,Yes,No,No,Cloudy,Daytime,No,No,No,No,No,No
 2b901de6-4708b6ea.jpg,Yes,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 2b904850-dae798c1.jpg,No,Yes,Yes,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
-2b923350-c22307af.jpg,Yes,Yes,Yes,No,Yes,Yes,No,No,Snowy,"Dusk/dawn
-<|im|",No,No,No,No,Yes,No
+2b923350-c22307af.jpg,Yes,Yes,Yes,No,Yes,Yes,No,No,Snowy,Dusk/dawn,No,No,No,No,Yes,No
 2b92915d-4e0f18b9.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 2b9e683c-90a19964.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 2ba7d514-01a636ab.jpg,No,No,No,No,No,No,No,No,Rainy,Daytime,No,No,No,No,Yes,Yes
@@ -2316,8 +2311,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 3ad71ba9-3e7eb47a.jpg,Yes,No,Yes,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,Yes,No
 3ade1ab9-6c018fab.jpg,No,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
 3adef612-a72c5d83.jpg,No,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,Yes,Yes
-3aed4a89-1c1c5c7a.jpg,Yes,Yes,Yes,No,Yes,Yes,No,No,Rainy,"Dusk/dawn
-<|im|",No,No,No,No,Yes,No
+3aed4a89-1c1c5c7a.jpg,Yes,Yes,Yes,No,Yes,Yes,No,No,Rainy,Dusk/dawn,No,No,No,No,Yes,No
 3b0461c6-00750a2e.jpg,No,Yes,No,No,Yes,Yes,No,No,Cloudy,Daytime,No,No,No,No,No,No
 3b0a7a3d-b0f52555.jpg,No,Yes,No,No,Yes,Yes,No,No,Cloudy,Daytime,No,No,No,No,No,No
 3b146563-8d667c4b.jpg,Yes,Yes,No,No,No,No,No,No,Snowy,Daytime,No,No,No,No,No,No
@@ -2976,8 +2970,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 4d70ad1a-2ab4ab95.jpg,No,No,No,No,No,No,No,No,Cloudy,Daytime,No,No,Yes,No,No,No
 4d733ba1-6ad4b922.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,Yes,No
 4d7621dc-5a7ffb9b.jpg,No,Yes,Yes,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,Yes,No
-4d79f06c-4a169b1a.jpg,Yes,Yes,Yes,No,No,No,No,No,Cloudy,"Dusk/dawn
-<|im|",No,No,No,No,No,No
+4d79f06c-4a169b1a.jpg,Yes,Yes,Yes,No,No,No,No,No,Cloudy,Dusk/dawn,No,No,No,No,No,No
 4daa286f-80b97570.jpg,No,Yes,No,No,No,No,No,No,Rainy,Daytime,No,No,No,No,Yes,No
 4daa286f-e9772c43.jpg,No,Yes,Yes,No,No,Yes,No,No,Mostly clear,Daytime,No,No,No,No,Yes,No
 4db26ff7-f8a3490b.jpg,No,Yes,No,No,No,Yes,No,No,Rainy,Daytime,No,No,No,No,Yes,No
@@ -4475,8 +4468,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 72e2c746-0df729c0.jpg,Yes,Yes,No,No,No,Yes,No,No,Cloudy,Daytime,No,No,No,No,No,Yes
 72eccbd6-402a218d.jpg,Yes,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
 72f8bb98-b2268b73.jpg,No,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
-72feb2f3-51f0798c.jpg,Yes,Yes,Yes,No,No,No,No,No,Cloudy,"Dusk/dawn
-<|im|",No,No,No,No,No,No
+72feb2f3-51f0798c.jpg,Yes,Yes,Yes,No,No,No,No,No,Cloudy,Dusk/dawn,No,No,No,No,No,No
 7300f8fb-84ecf547.jpg,Yes,Yes,No,No,No,No,No,No,Rainy,Daytime,No,No,No,No,No,No
 730585a8-d57b052f.jpg,No,Yes,No,No,Yes,Yes,No,No,Cloudy,Daytime,No,No,No,No,No,No
 730c887b-0f4a1766.jpg,No,Yes,Yes,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
@@ -5443,8 +5435,7 @@ Image_Name,Is there any artificial lights?,Is there any shadow?,Is there any twi
 8addd213-0f68b2a6.jpg,No,No,No,No,No,No,No,No,Foggy,Dusk/dawn,No,No,No,No,Yes,No
 8adfd61f-1ab308e1.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,Yes,No
 8ae98dba-def17f93.jpg,No,Yes,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
-8aed8e2f-e572279a.jpg,Yes,No,Yes,No,No,No,No,No,Rainy,"Dusk/dawn
-<|im|im_end|>",No,No,No,No,Yes,No
+8aed8e2f-e572279a.jpg,Yes,No,Yes,No,No,No,No,No,Rainy,Dusk/dawn,No,No,No,No,Yes,No
 8aefe373-5870a370.jpg,No,No,No,No,No,No,No,No,Mostly clear,Daytime,No,No,No,No,No,No
 8af0541f-0f4deefe.jpg,Yes,Yes,No,No,No,No,No,No,Cloudy,Daytime,No,No,No,No,No,No
 8af07d3d-0ddad610.jpg,Yes,No,No,No,No,No,No,No,Rainy,Daytime,No,No,No,No,No,No
