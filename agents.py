@@ -291,11 +291,3 @@ filtrador = Agent(
     debug_mode=True,
 )
 
-
-schema_string = get_collum_unique_values_string("data.csv")
-analista_input = f"""
-    User Query: {"qualquer consulta"}
-    Data Columns: {schema_string}
-    Image Directory: {"bdd/.100k/images/"}
-"""
-print(analista_input)
