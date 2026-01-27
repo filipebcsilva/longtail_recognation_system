@@ -1,1 +1,4 @@
 3d7be789-6e1cdeb5.jpg
+   "4. OUTPUT FORMAT:",
+    "   - Return ONLY a Python list of strings containing the necessary questions.",
+    "   - Example: ['Number of cars', 'Is there a traffic light']",

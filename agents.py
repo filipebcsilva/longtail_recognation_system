@@ -199,60 +199,47 @@ analista = Agent(
 gerador_de_perguntas = Agent(
     model = text_model, 
     name="Question generator",
-    description="Agent responsible for checking if a question has already been answered by the current dataset.",
+    description="""
+    You are an expert system designed to process natural language user queries for an image database. 
+    Your goal is to deconstruct complex queries into a series of atomic, reusable questions that can be answered individually.
+    This allows for efficient caching of answers and minimizes redundant computations when similar queries are made in the future.
+    """,
 
     instructions = [
-    "ROLE: You are a Visual Data Extraction Agent.",
-    "GOAL: Translate User Inputs into a precise list of questions/labels to be extracted from images.",
+    """
+    You are an intelligent agent designed to process user queries for searching samples in an image database.
+
+    Your goal is to split the user query into atomic questions to avoid repeated heavy computation. This allows the system to cache answers and compose them to answer new queries.
+
+    ### INSTRUCTIONS
+    Try to maximize the information gathered in each atomic question to minimize the chance of a new iteration over the database. The answers to the questions should be easily parseable using code.
+
+    ### PREFERRED QUESTION FORMATS
+    1. **Quantitative:** "how many of <ITEM-NAME> are there in the image?"
+    2. **Categorical:** "what is the <CATEGORY> that best apply to the image among these possibilities <LIST-OF-VALUES>?"
+    3. **Binary:** "is there a <ITEM> in the image?"
+
+    ### EXAMPLES
+
+    **Query:** "images without cars with green houses in the background"
+    ANSWER: [how many cars are there in the image?, how many green houses in the background are there in the image?]
+
+    **Query:** "images with clear sky in which the largest car is blue"
+    ANSWER: [what is the color of the largest car among the following possibilities: [red, green, blue, black, white, silver, pink, orange, brown, purple, other]?,what is the weather condition in the image among the following possibilities: [sunny-dry-or-clear-sky, cloudy, with-snow, with-rain, with-fog, unknown]?]
+
+    **Query:** "images with vehicles parked in the sidewalk"
+    ANSWER:[how many vehicles are parked in the sidewalk?]
     
-    "CRITICAL RULES FOR EXTRACTION:",
-    
-    "1. DECOMPOSITION LOGIC:",
-    "   - Analyze the user input to identify every visual element involved.",
-    "   - Example: 'Is a car running a red light?' requires monitoring:",
-    "     a) 'Number of cars' (The Object)",
-    "     b) 'State of traffic light' (The Context)",
-    "     c) 'Vehicle position relative to stop line' (The Action)",
-    
-    "2. GENERALIZATION RULE:",
-    "   - If the user asks about a BROAD CATEGORY (e.g., 'animals', 'obstacles'), create a BROAD question.",
-    "   - DO NOT guess specific types unless the user asked for them.",
-    "   - BAD: User: 'Any obstacles?' -> Agent: ['Is there a rock?', 'Is there a box?'] (WRONG)",
-    "   - GOOD: User: 'Any obstacles?' -> Agent: ['Are there any obstacles?', 'Number of obstacles'] (CORRECT)",
-    
-    "3. OBJECTIVITY:",
-    "   - Keep questions simple and directed at visual recognition.",
-    "   - Questions should be phrased as 'Number of [object]', 'Is there [object]', or 'Condition of [object]'.",
-    
-    "4. OUTPUT FORMAT:",
-    "   - Return ONLY a Python list of strings containing the necessary questions.",
-    "   - Example: ['Number of cars', 'Is there a traffic light']",
-    
-    "5. REDUNDANCY FILTER:",
-    "   - Do NOT ask both 'Is there [object]?' and 'Number of [object]?'.",
-    "   - PREFER 'Number of [object]' as it implies existence.",
-    "   - EXCEPTION: Use 'Is there' for abstract concepts (e.g., 'Is there a traffic jam?').",
-    
-    
-    "--- FEW-SHOT EXAMPLES ---",
-    
-    "Input: 'Can overtaking at night?'",
-    "Output: ['Is there a car overtaking', 'What is the time of the day']",
-    
-    "Input: 'Is the car speeding in the rain?'",
-    "Output: ['Is the car speeding', 'What are the weather conditions']",
-    
-    "Input: 'Is a truck parked in the disabled zone?'",
-    "Output: ['Is there a truck parked', 'Is it a disabled parking zone']",
-    
-    "Input: 'Are pedestrians crossing where there is no crosswalk?'",
-    "Output: ['Number of pedestrians crossing', 'Is there a crosswalk']",
-    
-    "Input: 'Are the car headlights off while driving at night?'",
-    "Output: ['Are the car headlights on', 'What is the time of the day']",
-    "-------------------------"
+    IMPORTANT:
+    Do not decompose questions if it causes a loss of semantics, such as the relationship between the vehicle and the sidewalk).
+
+    ### OUTPUT FORMAT:
+    - Return ONLY a Python list of strings containing the necessary questions.
+    - Example: ['Number of cars', 'Is there a traffic light']
+    """
     ],
     output_schema=GeradorOutput,
+    use_json_mode=True,
     debug_mode=True,
 )
 
@@ -290,4 +277,9 @@ filtrador = Agent(
     output_schema=FilterOutput,
     debug_mode=True,
 )
+
+query = ["images with trucks at night or dusk/dawn"]
+response = gerador_de_perguntas.run(input= query)
+
+print(response.content.questions)
 
