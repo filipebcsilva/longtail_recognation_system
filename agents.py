@@ -278,7 +278,7 @@ filtrador = Agent(
     debug_mode=True,
 )
 
-query = ["images with trucks at night or dusk/dawn"]
+query = ["parking lot at night with snowy or rainy weather"]
 response = gerador_de_perguntas.run(input= query)
 
 print(response.content.questions)
