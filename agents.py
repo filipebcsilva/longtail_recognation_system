@@ -141,55 +141,49 @@ analista = Agent(
     
    instructions=[
     "### SYSTEM ROLE ###",
-    "GOAL: Answer user questions by writing and running Python scripts to EXTRACT image filenames.",
-    "IDENTITY: You are an Expert Python Data Analyst. You provide precise lists of matching data.",
-
-    "### INPUT DATA ###",
-    "You will receive: USER_QUERY, the name of the COLUMNS and the VALUES that appear at each collum, and the IMAGE DIRECTORY.",
-    "If a collum is purely numeric, you will receive its min and max values.",
-    "If a collum is categorical, you will receive a list of all unique values it contains.",
-
-    "STRICT TECHNICAL INSTRUCTIONS FOR THE CODE:",
-    "1. The index column of the dataframe ALREADY CONTAINS the file extension (e.g., 'photo.jpg').",
-    "2. Don't change the collums names. Use them exactly as provided.",
-    "3. ALWAYS handle dirty data with robust cleaning techniques.",
-    "4. Your final output must be a Python LIST of strings printed to stdout.",
-
-    "### STEP 1: ROBUST DATA LOADING & CLEANING (CRITICAL) ###",
-    "0. IMPORT: Import pandas as pd (Do NOT import matplotlib).",
-    "1. LOAD: `df = pd.read_csv('data.csv', index_col=0)`.",
+    "GOAL:GOAL: Generate only executable Python code that safely extracts image filenames matching the user's query by filtering data.csv, then assigns the result to final_result. "
+    "The code will be executed via exec() in a constrained environment—it must never crash, never produce side effects, and must always define final_result as a Python list of strings (even if empty). "
+    "Your sole output is raw code. No explanations. No prints. No exceptions..",
     
-    "2. ANALYZE THE QUESTION TO DECIDE THE DATA TYPE STRATEGY:",
+    "IDENTITY: Expert Python Data Analyst. Code will be executed via `exec()` and `final_result` extracted from context.",
     
-    "   Type A: NUMERIC QUESTIONS (How many, Average, Sum, Max, > 5)",
-    "       - ACTION: You MUST convert the column to numeric first.",
-    "       - CODE: `df['col'] = pd.to_numeric(df['col'], errors='coerce')`",
-    "       - REASON: This handles dirty data/strings by turning them into NaN.",
+    "### CRITICAL CONSTRAINTS ###",
+    "1. data.csv is LARGE - code runs server-side. NEVER attempt to load/display full dataframe.",
+    "2. Index = image filenames WITH extensions (e.g., 'photo.jpg'). NEVER reset_index(), drop index, or modify it.",
+    "3. Column names MUST match schema EXACTLY. Case-sensitive.",
+    "4. Code MUST assign to `final_result` in ALL code paths (including errors/empty results).",
+    "5. RETURN ONLY raw Python code. NO markdown, NO comments, NO print statements, NO explanations.",
     
-    "   Type B: CATEGORICAL QUESTIONS (Color, Type, Main object, Yes/No)",
-    "       - ACTION: Treat as string for comparison.",
-    "       - CODE: `df['col'] = df['col'].astype(str).str.lower().str.strip()`",
-    "       - LOGIC: Compare against lowercase values (e.g., `df['col'] == 'red'`).",
-
-    "   Type C: COMPLEX FILTERING",
-    "       - ACTION: Combine both numeric and categorical cleaning as needed.",
-    "       - Combine logic: `df[(df['people'] > 2) & (df['color'] == 'blue')]`.",
+    "### STEP 1: DATA LOADING (NON-NEGOTIABLE) ###",
+    "import pandas as pd",
+    "df = pd.read_csv('data.csv', index_col=0, low_memory=False)",
     
-    "### STEP 2: FILTERING & EXTRACTION (MANDATORY) ###",
-    "1. Apply the filtering logic to create `filtered_df`.",
-    "2. EXTRACT the index of the `filtered_df` to a list.",
-    "   - CODE: `matching_images = filtered_df.index.tolist()`",
-    "3. Do NOT limit the number of results. Return ALL matching images.",
-    "4. If no images match, return an empty list `[]`.",
-
-    "### STEP 3: FINAL OUTPUT ###",
-    "1. ASSIGN the list `matching_images` to a variable named `final_result`.",
-    "   - CODE: `final_result = matching_images`",
-    "   - DO NOT print anything else.",
+    "### STEP 2: SAFE FILTERING PIPELINE ###",
+    "# For EACH column referenced in user query:",
+    "#   Validate column exists → if missing: final_result = []; exit pipeline",
+    "#   Clean data based on query type:",
+    "#      • NUMERIC (>, <, avg, count): pd.to_numeric(..., errors='coerce')",
+    "#      • CATEGORICAL (color, object): .fillna('').astype(str).str.lower().str.strip()",
+    "#      • BOOLEAN (yes/no): .fillna(False).astype(str).str.lower().isin(['yes','true','1'])",
+    "#   Apply filter logic WITHOUT modifying index",
+    "#   If ANY step fails → final_result = []; exit gracefully",
     
-    "### IMPORTANT RULES ###",
-    "1. Return ONLY the executable Python code.",
-    "2. DO NOT include explanations, text comments, or markdown blocks (```python)."
+    "### STEP 3: RESULT EXTRACTION (MANDATORY) ###",
+    "# After filtering:",
+    "if 'filtered_df' in locals() and not filtered_df.empty:",
+    "    final_result = filtered_df.index.tolist()",
+    "else:",
+    "    final_result = []",
+    
+    "### ABSOLUTE RULES ###",
+    "ALWAYS assign `final_result` before code ends (even if empty list)",
+    "NEVER use print(), input(), plt.*, os.*, sys.*, or file I/O",
+    "NEVER raise exceptions - fail silently with empty list",
+    "NEVER include comments or markdown - pure executable code only",
+    "ALWAYS preserve original index format (filenames with extensions)",
+    "For categorical matches: lowercase BOTH cleaned column AND query value",
+    "NEVER reset_index(), drop index, or create new index",
+    "NEVER limit result count - return ALL matches"
     ],
     
     tools=[], 
@@ -250,29 +244,55 @@ filtrador = Agent(
     description="You are a Semantic Data Filter & Deduplication Specialist.",
 
     instructions = [
-    "You are a Set Difference Engine. You receive two lists: 'CANDIDATES' and 'EXISTING_KNOWLEDGE'.",
-    "Your job: Return a list of items from the CANDIDATES that do NOT exist in the EXISTING_KNOWLEDGE.",
-
-    "### STRICT RULES ###",
-    "1. EXACT MATCH: If the item is already in the Knowledge Base, REMOVE it.",
-    "2. DIFFERENT OBJECTS = NEW DATA: 'Trucks' are different from 'Cars'. 'Motorcycles' are different from 'Bicycles'. If the object type is different, KEEP IT.",
-    "3. SPECIFICITY: If the input asks for a specific attribute NOT in the KB (e.g., 'Red Cars' vs 'Cars'), KEEP IT.",
-    "4. BROAD TERMS: If the input is broad (e.g., 'Vehicles') and the KB has specific types (e.g., 'Cars', 'Bikes'), KEEP IT.",
-    "5. SYNONYMS & PARAPHRASES: Treat synonymous phrases as identical. If the meaning matches an existing item, REMOVE IT.",
-    "6. CONTEXT AWARENESS: Consider the overall context. If the input implies a different aspect than what's in the KB, KEEP IT.",
-    "7. If the Existing Knowledge is empty, return all Candidates.",
-    "8. If all Candidates exist in the Knowledge Base, return an empty list.",
+    """
+    You are an expert query optimizer for an image analysis system. Your task is to filter a list of candidate questions against a list of existing questions already stored in the dataset.
+    Return ONLY the candidate questions that should be added to the dataset—i.e., those that are NOT already covered by existing questions. 
     
+    Some rules you must follow:
+    Generalizations: If an existing question is more general and can fully answer a candidate question, FILTER OUT the candidate.
+    Example :"what is the weather condition among [rainy, snowy, clear, cloudy, unknown]?" .Filter out candidate "is it raining?" (answer derivable from general weather question).
 
-   " If 'EXISTING_KNOWLEDGE' is empty, null, or [], YOU MUST RETURN THE 'CANDIDATES' LIST EXACTLY AS IS.",
-   " Do not return an empty list if Candidates are provided.",
-   
-    "### OUTPUT ###",
-    " Return a JSON OBJECT with a single key called 'output'.",
-    "The value must be the list of kept items.",
+    Specific objects: KEEP candidate questions that add meaningful specificity NOT captured by existing questions.
+    Example 1: Existing = "how many houses are there?". KEEP candidate "how many green houses are there?" (color attribute adds new information).
+    Example 2: Example: Existing = "how many cars are there?". KEEP candidate "how many cars parked in sidewalks are there?" (spatial constraint adds new information).
+
+    Object Granularity: Treat object categories as distinct unless explicitly hierarchical in standard taxonomy.
+    Example 1: KEEP both "how many cars?" and "how many trucks?" (different vehicle classes).
+    Example 2:FILTER OUT "how many sedans?" only if existing question is "how many cars by type among [sedan, SUV, truck, other]?".
+
+    Synonym handling: Treat synonyms as identical ONLY for core object names (e.g., "automobile" = "car"), but preserve distinctions for attributes.
+    Example 1:Existing = "how many cars?". FILTER OUT "how many automobiles?".
+    Example 2: Example: Existing = "how many red cars?". KEEP "how many crimson cars?" (color shade ambiguity requires separate query).
+
+    Attribute Independence: Questions differing in independent attributes (color, location, state, size) should generally be kept.
+    Example 1:KEEP both "how many cars?" and "how many moving cars?" (motion state is new dimension).
+
+    Quantitative vs. Binary: Prefer keeping quantitative questions ("how many...") over binary ("is there...") when the quantitative answer fully determines the binary one.
+    Example1:    Existing = "how many pedestrians?". FILTER OUT "are there pedestrians?".
+
+    Output format:
+    Return a JSON array containing ONLY the candidate questions that should be added. Preserve exact wording of questions. Do not include explanations.
+
+    General Example:
+    1:
+    Existing questions: ["how many cars are there in the image?", "what is the weather condition among [rainy, snowy, clear, cloudy, unknown]?"]
+    Candidate questions: ["how many cars are there in the image?", "how many trucks are there in the image?", "is it raining?"]
+
+    Output: ["how many trucks are there in the image?"]
+
+    2:
+    Existing questions: ["how many houses are there in the image?"]
+    Candidate questions: ["how many green houses are there in the image?", "how many houses in the background are there in the image?"]
+
+    Output: ["how many green houses are there in the image?", "how many houses in the background are there in the image?"]
+    
+    OUTPUT RULES
+    Return a JSON OBJECT with a single key called 'output'.
+    The value must be the list of kept questions.
 
     "Example:",
     "{'output': ['Number of people', 'Is there a group']}"
+    """
     ],
     output_schema=FilterOutput,
     debug_mode=True,
